@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Paws & Play</title>
+        <link rel="icon" type="image/svg+xml" href="assests/favicon.svg">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                        }
+                    },
+                    fontFamily: {
+                        playfair: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3edf0;
+            --bg-card: #ffffff;
+            --bg-gray: #f9fafb;
+            --text-primary: #000000;
+            --text-secondary: #4a5568;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --card-bg: #ffffff;
+            --hover-bg: #f9fafb;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --pink-primary: #dd3874;
+            --pink-hover: #c13b6f;
+            --footer-bg: #111827;
+            --footer-text: #ffffff;
+            --map-bg: #ffffff;
+            --input-bg: #ffffff;
+            --section-bg: #ffffff;
+            --icon-bg: #fce4ec;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #1a1d24;
+            --bg-card: #1a1d24;
+            --bg-gray: #1a1d24;
+            --text-primary: #ffffff;
+            --text-secondary: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-color: #2d2d2d;
+            --card-bg: #1a1d24;
+            --hover-bg: #2d2d2d;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --pink-primary: #dd3874;
+            --pink-hover: #ff4d88;
+            --footer-bg: #0a0a0a;
+            --footer-text: #ffffff;
+            --map-bg: #1a1d24;
+            --input-bg: #1a1d24;
+            --section-bg: #1a1d24;
+            --icon-bg: #2d2d2d;
+        }
+
+        ::selection {
+            background-color: #e05387;
+            color: white;
+        }
+
+        #map {
+            z-index: 1;
+            background-color: var(--map-bg);
+        }
+
+        .card h1 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-family: sans-serif;
+        }
+
+        .chooseCard {
+            opacity: 0;
+            animation: fade-in-up 0.8s ease-out forwards;
+        }
+
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chooseCard2 {
+            opacity: 0;
+            animation: fade-i-up 0.8s ease-out forwards;
+        }
+
+        @keyframes fade-i-up {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cards .chooseCard2:nth-child(1) {
+            animation-delay: 0.5s;
+        }
+
+        .cards .chooseCard2:nth-child(2) {
+            animation-delay: 0.9s;
+        }
+
+        .cards .chooseCard2:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        nav {
+            transition: padding 0.3s ease-in-out;
+        }
+
+        #headers.scrolled {
+            background-color: var(--bg-card) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        #headers.scrolled nav {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .bg-pink-600 {
+            background-color: var(--pink-primary) !important;
+        }
+
+        .hover\:bg-pink-700:hover {
+            background-color: var(--pink-hover) !important;
+        }
+
+        .text-pink-600 {
+            color: var(--pink-primary) !important;
+        }
+
+        .text-pink-100 {
+            color: #ffe4e6 !important;
+        }
+
+        .bg-pink-100 {
+            background-color: var(--icon-bg) !important;
+        }
+
+        [data-theme="dark"] .bg-pink-100 {
+            background-color: var(--icon-bg) !important;
+        }
+
+        .bg-gray-50 {
+            background-color: var(--bg-gray) !important;
+        }
+
+        .bg-white {
+            background-color: var(--bg-card) !important;
+        }
+
+        .text-gray-900 {
+            color: var(--text-primary) !important;
+        }
+
+        .text-gray-700 {
+            color: var(--text-secondary) !important;
+        }
+
+        .text-gray-600 {
+            color: var(--text-secondary) !important;
+        }
+
+        .text-gray-500 {
+            color: var(--text-muted) !important;
+        }
+
+        .border-gray-200 {
+            border-color: var(--border-color) !important;
+        }
+
+        .shadow-lg {
+            box-shadow: 0 10px 15px -3px var(--shadow-color) !important;
+        }
+
+        .shadow-inner {
+            box-shadow: inset 0 2px 4px 0 var(--shadow-color) !important;
+        }
+
+        input,
+        select,
+        textarea {
+            background-color: var(--input-bg) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--border-color) !important;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: var(--text-muted) !important;
+        }
+
+        option {
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .hover\:text-pink-700:hover {
+            color: var(--pink-hover) !important;
+        }
+
+        .hover\:bg-pink-600:hover {
+            background-color: var(--pink-primary) !important;
+        }
+
+        footer {
+            background-color: var(--footer-bg) !important;
+            color: var(--footer-text);
+        }
+
+        .bg-gray-800 {
+            background-color: #2d2d2d !important;
+        }
+
+        [data-theme="dark"] .bg-gray-800 {
+            background-color: #404040 !important;
+        }
+
+        .hover\:bg-pink-600:hover {
+            background-color: var(--pink-primary) !important;
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .block.bg-card {
+            background-color: var(--section-bg) !important;
+        }
+
+        [data-theme="dark"] .bg-white {
+            background-color: var(--bg-card) !important;
+        }
+
+        [data-theme="dark"] .bg-gray-50 {
+            background-color: var(--bg-gray) !important;
+        }
+
+        [data-theme="dark"] .bg-white.p-4 {
+            background-color: var(--bg-card) !important;
+        }
+
+        [data-theme="dark"] .bg-pink-100 {
+            background-color: #2d2d2d !important;
+        }
+
+        [data-theme="dark"] .text-pink-600 {
+            color: var(--pink-primary) !important;
+        }
+
+        [data-theme="dark"] .bg-green-200 {
+            background-color: #1a472a !important;
+        }
+
+        [data-theme="dark"] .text-green-600 {
+            color: #4ade80 !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            z-index: 1000;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-primary);
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background-color: var(--bg-card);
+            box-shadow: -5px 0 20px var(--shadow-color);
+            transition: right 0.3s ease;
+            z-index: 999;
+            padding: 100px 30px 30px;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-menu li {
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .mobile-menu.active li:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .mobile-menu.active li:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .mobile-menu.active li:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .mobile-menu.active li:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
+        .mobile-menu.active li:nth-child(5) {
+            transition-delay: 0.5s;
+        }
+
+        .mobile-menu.active li:nth-child(6) {
+            transition-delay: 0.6s;
+        }
+
+        .mobile-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+            padding: 12px 15px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .mobile-menu a:hover {
+            background-color: var(--pink-primary);
+            color: white;
+            border-color: var(--pink-primary);
+            transform: translateX(5px);
+        }
+
+        .mobile-menu .book-now-mobile {
+            background-color: var(--pink-primary);
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid var(--pink-primary);
+        }
+
+        .mobile-menu .book-now-mobile:hover {
+            background-color: transparent;
+            color: var(--pink-primary);
+            border-color: var(--pink-primary);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+            backdrop-filter: blur(3px);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .container {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+
+            nav {
+                padding: 1rem 2rem !important;
+            }
+
+            nav .gap-8 {
+                gap: 1rem !important;
+            }
+
+            .bg-pink-600.h-\[400px\] {
+                height: 300px;
+            }
+
+            .bg-pink-600 h1 {
+                font-size: 3rem !important;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                padding: 0.75rem 1rem !important;
+            }
+
+            nav .hidden.md\:flex {
+                display: none !important;
+            }
+
+            nav .flex.items-center.gap-4 {
+                gap: 0.5rem !important;
+            }
+
+            nav .bg-pink-600 {
+                display: none;
+            }
+
+            nav .text-xl {
+                font-size: 1rem !important;
+            }
+
+            nav .text-\[13px\] {
+                font-size: 10px !important;
+            }
+
+            nav div[style*="width: 3pc"] {
+                width: 2.5rem !important;
+                height: 2.5rem !important;
+                border-width: 6px !important;
+            }
+
+            .bg-pink-600.h-\[400px\] {
+                height: 250px;
+                padding: 2rem 1rem;
+            }
+
+            .bg-pink-600 h1 {
+                font-size: 2.5rem !important;
+            }
+
+            .bg-pink-600 p {
+                font-size: 1rem !important;
+            }
+
+            .flex-wrap.-mx-4 {
+                flex-direction: column;
+            }
+
+            .w-full.lg\:w-1\/2 {
+                width: 100%;
+                padding: 0 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .max-w-xl {
+                max-width: 100%;
+            }
+
+            form .flex-wrap.-mx-2 {
+                flex-direction: column;
+            }
+
+            form .w-full.md\:w-1\/2 {
+                width: 100%;
+                padding: 0;
+                margin-bottom: 1rem;
+            }
+
+            form .px-2 {
+                padding: 0;
+            }
+
+            .bg-gray-50.p-8 {
+                padding: 1.5rem;
+            }
+
+            .block.bg-pink-100.p-20 {
+                padding: 3rem 1rem !important;
+            }
+
+            .cardsnew.grid-cols-3 {
+                grid-template-columns: 1fr !important;
+                gap: 1rem;
+            }
+
+            .cardsnew .m-5 {
+                margin: 0 !important;
+            }
+
+            .FAQ .w-1\/2 {
+                width: 90% !important;
+                margin: 1rem auto !important;
+            }
+
+            .card.m-5 {
+                margin: 0.75rem 0 !important;
+            }
+
+            .grid.grid-cols-2.gap-10 {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+
+            .grid.grid-cols-2.sm\:grid-cols-3 {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+
+            .timeing .ul {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+
+            .hours {
+                margin-left: 0 !important;
+                text-align: center;
+                align-items: center !important;
+            }
+
+            .hours li {
+                list-style: none;
+                text-align: center;
+            }
+
+            .flex-col.sm\:flex-row {
+                flex-direction: column !important;
+                text-align: center;
+                gap: 1rem !important;
+            }
+
+            .flex.gap-5 {
+                justify-content: center;
+            }
+
+            .space-y-6.mb-8 {
+                margin-bottom: 2rem;
+            }
+
+            .rounded-xl.overflow-hidden {
+                margin-top: 1.5rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .bg-pink-600 h1 {
+                font-size: 2rem !important;
+            }
+
+            .container.px-4.py-16 {
+                padding: 3rem 1rem;
+            }
+
+            h2.text-3xl {
+                font-size: 1.8rem !important;
+            }
+
+            .clientinfo h1 {
+                font-size: 1.8rem !important;
+                text-align: center;
+            }
+
+            .clientinfo p {
+                text-align: center;
+                font-size: 0.9rem !important;
+            }
+
+            .freqentlyasked h1 {
+                font-size: 1.8rem !important;
+                text-align: center;
+            }
+
+            .freqentlyasked p {
+                text-align: center;
+                font-size: 0.9rem !important;
+            }
+
+            .card .img.flex.gap-5 {
+                gap: 0.5rem !important;
+                flex-wrap: wrap;
+            }
+
+            .card .img h1 {
+                font-size: 1rem !important;
+            }
+
+            .card p.mt-5 {
+                font-size: 0.9rem !important;
+                margin-top: 0.75rem !important;
+            }
+
+            button#contact {
+                padding: 0.5rem 1.5rem !important;
+                font-size: 0.9rem !important;
+            }
+
+            .mt-6.flex.gap-4 {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .mobile-menu {
+                width: 100%;
+                padding: 100px 20px 30px;
+            }
+        }
+
+        @media screen and (max-width: 375px) {
+            .bg-pink-600 h1 {
+                font-size: 1.8rem !important;
+            }
+
+            .flex.items-center.gap-3 a .text-xl {
+                font-size: 0.9rem !important;
+            }
+
+            .card .img.flex.gap-5 {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .space-y-6.mb-8 .flex.items-start.gap-4 {
+                flex-wrap: wrap;
+            }
+
+            .bg-gray-50.p-8 {
+                padding: 1rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .bg-pink-600.h-\[400px\] {
+                height: 200px;
+            }
+
+            .bg-pink-600 h1 {
+                font-size: 2rem !important;
+            }
+
+            .mobile-menu {
+                padding: 70px 20px 20px;
+            }
+
+            .mobile-menu li {
+                margin-bottom: 15px;
+            }
+
+            .mobile-menu a {
+                padding: 8px 12px;
+                font-size: 1rem;
+            }
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .card-hover:hover {
+                transform: none;
+            }
+        }
+
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .gap-1,
+        .gap-2,
+        .gap-3,
+        .gap-4,
+        .gap-5 {
+            gap: 0.5rem;
+        }
+
+        @media screen and (min-width: 768px) {
+            .gap-1 {
+                gap: 0.25rem;
+            }
+
+            .gap-2 {
+                gap: 0.5rem;
+            }
+
+            .gap-3 {
+                gap: 0.75rem;
+            }
+
+            .gap-4 {
+                gap: 1rem;
+            }
+
+            .gap-5 {
+                gap: 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header id="headers"
+        style="position: fixed; top: 0; width: 100%; z-index: 900; transition: all 0.3s ease-in-out; background-color: rgba(255, 255, 255, 0); backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);">
+        <nav class="flex items-center justify-between p-6 lg:px-12 cursor-pointer">
+            <!-- Logo Section (Left side) -->
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <div style="width: 3pc; height: 3pc; background-color: #d74483; border: 10px solid #d74483; border-radius: 100%;"
+                        class="flex items-center justify-center">
+                        <svg width="24" height="24" class="text-white" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="leading-tight">
+                        <div class="text-xl text-gray-900 font-bold">Paws & Play</div>
+                        <span class="text-[13px] text-gray-600 font-medium">Premium Pet Care</span>
+                    </div>
+                </a>
+            </div>
+
+            <ul class="hidden md:flex items-center gap-8 list-none">
+                <li><a href="index.html#Service"
+                        class="hover:text-pink-700 text-sm font-medium transition-colors">Services</a></li>
+                <li><a href="index.html#About"
+                        class="hover:text-pink-700 text-sm font-medium transition-colors">About</a></li>
+                <li><a href="index.html#Gallery"
+                        class="hover:text-pink-700 text-sm font-medium transition-colors">Gallery</a></li>
+                <li><a href="team.html" class="hover:text-pink-700 text-sm font-medium transition-colors">Team</a></li>
+                <li><a href="contact.html#FAQsec"
+                        class="hover:text-pink-700 text-sm font-medium transition-colors">FAQ</a></li>
+            </ul>
+
+            <div class="flex items-center gap-3">
+                <button type="button" id="theme-toggle" class="text-gray-600 hover:text-pink-600 transition-colors p-2"
+                    aria-label="Toggle dark mode">
+                    <svg id="sun-icon" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg id="moon-icon" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+
+                <a href="contact.html"
+                    class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-full text-sm font-bold shadow-sm transition-all whitespace-nowrap">
+                    Book Now
+                </a>
+
+                <div class="hamburger md:hidden" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html#Service">Services</a></li>
+            <li><a href="index.html#About">About</a></li>
+            <li><a href="index.html#Gallery">Gallery</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="contact.html#FAQsec">FAQ</a></li>
+            <li><a href="contact.html" class="book-now-mobile">Book Now</a></li>
+        </ul>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <main>
+        <div class="bg-pink-600 h-[400px] flex items-center justify-center px-4">
+            <div class="text-center text-white max-w-2xl">
+                <h1 class="font-bold text-4xl md:text-6xl font-playfair mb-4">Get in Touch</h1>
+                <p class="text-lg text-pink-100">Book an appointment, ask a question, or just say hello. We'd love to
+                    hear from you!</p>
+            </div>
+        </div>
+
+        <div class="container chooseCard mx-auto px-4 py-16">
+            <div class="flex flex-wrap -mx-4">
+                <div class="w-full lg:w-1/2 px-4 mb-12 lg:mb-0">
+                    <div class="max-w-xl">
+                        <h2 class="text-3xl font-bold font-playfair mb-2">Book an Appointment</h2>
+                        <p class="text-gray-500 mb-8">Fill out the form below and we'll get back to you within 24 hours.
+                        </p>
+
+                        <form action="#" class="space-y-4">
+                            <div class="flex flex-wrap -mx-2">
+                                <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                                    <input type="text" placeholder="Jane Smith"
+                                        class="w-full border-2 border-gray-200 p-3 rounded-lg focus:border-pink-600 focus:outline-none transition-colors">
+                                </div>
+                                <div class="w-full md:w-1/2 px-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                    <input type="tel" placeholder="(555) 123-4567"
+                                        class="w-full border-2 border-gray-200 p-3 rounded-lg focus:border-pink-600 focus:outline-none transition-colors">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <input type="email" placeholder="jane@example.com"
+                                    class="w-full border-2 border-gray-200 p-3 rounded-lg focus:border-pink-600 focus:outline-none transition-colors">
+                            </div>
+
+                            <div class="flex flex-wrap -mx-2">
+                                <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Pet's Name</label>
+                                    <input type="text" placeholder="Max"
+                                        class="w-full border-2 border-gray-200 p-3 rounded-lg focus:border-pink-600 focus:outline-none transition-colors">
+                                </div>
+                                <div class="w-full md:w-1/2 px-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Pet Type</label>
+                                    <select
+                                        class="w-full border-2 border-gray-200 p-3 rounded-lg focus:border-pink-600 focus:outline-none transition-colors">
+                                        <option selected disabled>Select pet type</option>
+                                        <option>Dog</option>
+                                        <option>Cat</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Service Interested
+                                    In</label>
+                                <select
+                                    class="w-full border-2 border-gray-200 p-3 rounded-lg focus:border-pink-600 focus:outline-none transition-colors">
+                                    <option selected disabled>Select a service</option>
+                                    <option>Full Grooming</option>
+                                    <option>Bath & Brush</option>
+                                    <option>Daycare</option>
+                                    <option>Overnight Boarding</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Additional
+                                    Information</label>
+                                <textarea
+                                    class="w-full border-2 border-gray-200 p-3 rounded-lg h-32 focus:border-pink-600 focus:outline-none transition-colors"
+                                    placeholder="Tell us about your pet..."></textarea>
+                            </div>
+
+                            <button type="submit"
+                                class="bg-pink-600 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-700 transition-all shadow-lg">Submit
+                                Request</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 px-4">
+                    <div class="bg-gray-50 p-8 rounded-2xl">
+                        <h2 class="text-2xl font-bold font-playfair mb-6">Contact Information</h2>
+
+                        <div class="space-y-6 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-pink-100 p-3 rounded-full text-pink-600">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">Email</h3>
+                                    <p class="text-gray-600">hello@pawsandplay.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="bg-pink-100 p-3 rounded-full text-pink-600">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">Phone</h3>
+                                    <p class="text-gray-600">(555) 728-7529</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="bg-pink-100 p-3 rounded-full text-pink-600">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">Hours</h3>
+                                    <p class="text-gray-600 text-sm">Mon-Fri: 7:00 AM - 7:00 PM</p>
+                                    <p class="text-gray-600 text-sm">Sat: 8:00 AM - 6:00 PM</p>
+                                    <p class="text-gray-600 text-sm">Sun: 9:00 AM - 5:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rounded-xl overflow-hidden shadow-inner border border-gray-200">
+                            <div id="map" style="height: 300px; width: 100%;"></div>
+                            <div class="p-4 bg-white">
+                                <h4 class="font-bold text-gray-900">Paws & Play HQ</h4>
+                                <p class="text-sm text-gray-500">456 Pet Paradise Lane, Austin, TX 78701</p>
+                                <a href="https://maps.google.com" target="_blank"
+                                    class="text-pink-600 text-sm font-bold hover:underline mt-2 inline-block">Get
+                                    Directions →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="block h-50 p-20" id="newClientinfo" style="background-color: var(--section-bg);">
+            <div class="clientinfo flex flex-col items-center gap-2">
+                <h1 class="font-bold text-[30px]">New Client Information</h1>
+                <p class="text-gray-500 text-md">Welcome to Paws & Play! Here's what you need to know for your first
+                    visit.</p>
+            </div>
+            <div class="cardsnew grid grid-cols-3 w-full chooseCard2 mt-5">
+                <div class="card1 m-5 p-5 rounded-[20px]" style="background-color: var(--bg-card);">
+                    <div class="img">
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h1 class="font-bold text-[15px]">Vaccination Records</h1>
+                    <p class="text-gray-500 text-[14px] font-medium">Please bring proof of current vaccinations: Rabies,
+                        Distemper/Parvo, and Bordetella for dogs; Rabies and FVRCP for cats.</p>
+                </div>
+                <div class="card2 m-5 p-5 rounded-[20px]" style="background-color: var(--bg-card);">
+                    <div class="img">
+                        <div
+                            class="flex h-12 w-12 bg-green-200 items-center justify-center rounded-full bg-accent-100 text-accent-600 dark:bg-accent-900/30 dark:text-accent-400">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    style="color: green;" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h1 class="font-bold text-[15px]">First Visit Form</h1>
+                    <p class="text-gray-500 text-[14px] font-medium">Fill out our new client form online before your
+                        visit to save time. We'll email it to you after booking.</p>
+                </div>
+                <div class="card3 m-5 p-5 rounded-[20px]" style="background-color: var(--bg-card);">
+                    <div class="img">
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h1 class="font-bold text-[15px]">Payment Options</h1>
+                    <p class="text-gray-500 text-[14px] font-medium">We accept all major credit cards, cash, and
+                        CareCredit. Payment is due at time of service.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="FAQsec" class="frequently chooseCard py-10">
+            <div class="freqentlyasked flex flex-col items-center gap-2">
+                <h1 class="text-[30px] font-bold font-serif">Frequently Asked Questions</h1>
+                <p class="text-gray-500 text-[15px] font-medium">Everything you need to know about our services</p>
+            </div>
+        </div>
+
+        <div class="FAQ items-center justify-center flex flex-col py-10 chooseCard">
+            <div class="card w-1/2 p-5 m-5 rounded-[24px]" style="background-color: var(--bg-gray);">
+                <div class="img flex gap-5">
+                    <span
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">?</span>
+                    <h1>How often should I get my dog groomed?</h1>
+                </div>
+                <p class="mt-5">It depends on the breed and coat type. Most dogs benefit from professional grooming
+                    every 4-8 weeks. Dogs with longer coats or those prone to matting may need more frequent visits.
+                    We'll create a personalized schedule during your first visit.</p>
+            </div>
+
+            <div class="card w-1/2 p-5 m-5 rounded-[24px]" style="background-color: var(--bg-gray);">
+                <div class="img flex gap-5">
+                    <span
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">?</span>
+                    <h1>Do you groom cats?</h1>
+                </div>
+                <p class="mt-5">Yes! We offer grooming services for cats including lion cuts, bath and brush, nail
+                    trims, and sanitary trims. Our groomers are experienced in handling cats and use gentle,
+                    feline-friendly techniques.</p>
+            </div>
+
+            <div class="card w-1/2 p-5 m-5 rounded-[24px]" style="background-color: var(--bg-gray);">
+                <div class="img flex gap-5">
+                    <span
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">?</span>
+                    <h1>What vaccinations are required?</h1>
+                </div>
+                <p class="mt-5">For dogs: Rabies, Distemper/Parvo, and Bordetella (kennel cough). For cats: Rabies and
+                    FVRCP. All vaccinations must be current and documented by a licensed veterinarian. We require proof
+                    at your first visit.</p>
+            </div>
+
+            <div class="card w-1/2 p-5 m-5 rounded-[24px]" style="background-color: var(--bg-gray);">
+                <div class="img flex gap-5">
+                    <span
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">?</span>
+                    <h1>Can I stay and watch the grooming?</h1>
+                </div>
+                <p class="mt-5">We find that pets do better when their owners aren't present, as they tend to be calmer
+                    and more cooperative. However, we're happy to send photo updates during the appointment and you can
+                    always call to check in.</p>
+            </div>
+
+            <div class="card w-1/2 p-5 m-5 rounded-[24px]" style="background-color: var(--bg-gray);">
+                <div class="img flex gap-5">
+                    <span
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">?</span>
+                    <h1>What if my pet has special needs or medical conditions?</h1>
+                </div>
+                <p class="mt-5">Please let us know about any medical conditions, allergies, or special needs when
+                    booking. Our team is trained to handle pets with various conditions, and we can accommodate most
+                    special requirements.</p>
+            </div>
+
+            <div class="card w-1/2 p-5 m-5 rounded-[24px]" style="background-color: var(--bg-gray);">
+                <div class="img flex gap-5">
+                    <span
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">?</span>
+                    <h1>Do you offer pickup and delivery?</h1>
+                </div>
+                <p class="mt-5">Yes! We offer pet taxi services within a 10-mile radius for an additional fee. This is
+                    especially popular for our regular daycare clients and those with busy schedules.</p>
+            </div>
+
+            <div class="card chooseCard w-1/2 p-5 m-5 rounded-[10px]" style="background-color: var(--bg-card);">
+                <div class="img flex flex-col items-center">
+                    <h1>Still have questions?</h1>
+                    <p class="mt-2">We're here to help! Reach out to us anytime.</p>
+                    <button id="contact"
+                        class="mt-2 rounded-full bg-pink-600 hover:bg-pink-700 px-7 font-medium py-3 transition-tranform:ease-in 0.3 text-white">Contact
+                        Us</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white">
+        <div class="w-full mx-auto px-6 py-12">
+            <div class="grid grid-cols-2 gap-10">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-[#d74483] border-[6px] border-[#d74483]">
+                            <svg class="h-6 w-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                            </svg>
+                        </div>
+                        <h2 class="text-xl font-bold">Paws & Play</h2>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-md">Premium pet grooming, daycare, and boarding services in
+                        Austin, TX. Loving care for your furry family members since 2015.</p>
+                    <div class="mt-6 flex gap-4">
+                        <a href="https://facebook.com/pawsandplay"
+                            class="rounded-full hover:bg-pink-600 bg-gray-800 p-2 transition-colors"
+                            aria-label="Facebook">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="https://instagram.com/pawsandplay"
+                            class="rounded-full hover:bg-pink-600 bg-gray-800 p-2 transition-colors"
+                            aria-label="Instagram">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="https://tiktok.com/@pawsandplay"
+                            class="rounded-full hover:bg-pink-600 bg-gray-800 p-2 transition-colors"
+                            aria-label="TikTok">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="font-bold mb-3">Services</h3>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a class="hover:text-white" href="ourservices.html#grooming">Grooming</a></li>
+                            <li><a class="hover:text-white" href="ourservices.html">Daycare</a></li>
+                            <li><a class="hover:text-white" href="ourservices.html">Boarding</a></li>
+                            <li><a class="hover:text-white" href="ourservices.html">Pricing</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold mb-3">Company</h3>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a class="hover:text-white" href="#About">About Us</a></li>
+                            <li><a class="hover:text-white" href="team.html">Our Team</a></li>
+                            <li><a class="hover:text-white" href="#Gallery">Gallery</a></li>
+                            <li><a class="hover:text-white" href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold mb-3">Support</h3>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a class="hover:text-white" href="contact.html#FAQsec">FAQs</a></li>
+                            <li><a class="hover:text-white" href="contact.html#newClientinfo">New Client Info</a></li>
+                            <li><a class="hover:text-white" href="contact.html#FAQsec">Vaccination Policy</a></li>
+                            <li><a class="hover:text-white" href="contact.html#FAQsec">Cancellation Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-8 border-gray-700">
+
+            <div class="timeing">
+                <div class="ul grid grid-cols-3 gap-4 text-gray-400">
+                    <div class="hours list-none gap-1 flex flex-col ml-5">
+                        <h3 class="font-bold">Hours</h3>
+                        <li>Mon-Fri: 7:00AM - 7:00PM</li>
+                        <li>Saturday: 8:00AM - 6:00PM</li>
+                        <li>Sunday: 9:00 AM - 5:00 PM</li>
+                    </div>
+
+                    <div class="hours list-none gap-1 flex flex-col ml-5">
+                        <h3 class="font-bold">Contact</h3>
+                        <li>hello@pawsandplay.com</li>
+                        <li>(555) 728-7529</li>
+                    </div>
+
+                    <div class="hours list-none gap-1 flex flex-col ml-5">
+                        <h3 class="font-bold">Location</h3>
+                        <li>456 Pet Paradise Lane</li>
+                        <li>Austin, TX 78701</li>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-8 border-gray-700">
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-gray-400 text-sm">
+                <p>© 2026 Paws & Play. All rights reserved.</p>
+                <div class="flex gap-5">
+                    <a class="hover:text-white" href="#">Privacy Policy</a>
+                    <a class="hover:text-white" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const map = L.map('map').setView([30.2722, -97.7473], 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            L.marker([30.2722, -97.7473]).addTo(map)
+                .bindPopup('<b>Paws & Play</b><br>456 Pet Paradise Lane')
+                .openPopup();
+
+            setTimeout(() => { map.invalidateSize(); }, 400);
+        });
+
+        const header = document.querySelector('#headers');
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-menu a');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            }
+        });
+
+        if (!savedTheme) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+    </script>
+</body>
+
+</html>

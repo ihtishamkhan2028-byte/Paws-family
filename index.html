@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paws & Play | Pet Care & Play Services</title>
+    <link rel="icon" type="image/svg+xml" href="assests/favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="Paws & Playcss.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        playfair: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3edf0;
+            --bg-card: #ffffff;
+            --bg-gray: #f3f4f6;
+            --bg-pink-light: #fce4ec;
+            --text-primary: #000000;
+            --text-secondary: #4a5568;
+            --text-muted: #6b7280;
+            --text-gray: #4b5563;
+            --border-color: #e5e7eb;
+            --card-bg: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --pink-primary: #dd3874;
+            --pink-hover: #c13b6f;
+            --footer-bg: #111827;
+            --footer-text: #ffffff;
+            --green-600: #16a34a;
+            --tag-bg: #bbf7d0;
+            --tag-text: #166534;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #1a1d24;
+            --bg-card: #1a1d24;
+            --bg-gray: #1a1d24;
+            --bg-pink-light: #4a2d3a;
+            --text-primary: #ffffff;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --text-gray: #d1d5db;
+            --border-color: #404040;
+            --card-bg: #1a1d24;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --pink-primary: #dd3874;
+            --pink-hover: #ff4d88;
+            --footer-bg: #0a0a0a;
+            --footer-text: #ffffff;
+            --green-600: #4ade80;
+            --tag-bg: #1a472a;
+            --tag-text: #4ade80;
+        }
+
+        ::selection { background-color: #e05387; color: white; }
+
+        .card-hover { transition: transform 0.3s ease; }
+        .card-hover:hover { transform: translateY(-10px); }
+        .card-images-hover { transition: transform 0.3s ease; }
+        .card-images-hover:hover { transform: scale(1.05); }
+
+        .firstcontainer { background-color: #f3edf0 !important; display: flex; }
+        [data-theme="dark"] .firstcontainer { background-color: var(--bg-secondary) !important; }
+
+        .leftcontainer {
+            width: 50%;
+            padding: 40px;
+            animation: fade-in2 1s ease-in-out;
+        }
+        .leftcontainer h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            width: 80%;
+            word-spacing: 10px;
+            margin: 12px 4pc;
+            line-height: 4pc;
+            font-family: "Playfair Display", serif;
+        }
+        .leftcontainer p { font-size: 1.2rem; color: #4a5568; margin: 20px 4pc; font-weight: 500; }
+        .leftcontainer .buttons { margin: 2pc 4pc; }
+        .leftcontainer .numbershows p { color: #4a5568; font-weight: 500; margin: 4px 0; font-size: 1.0rem; }
+        .rightcontainer img { animation: fade-in 1s ease-in-out; }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fade-in2 {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fade-i {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        nav { transition: padding 0.3s ease-in-out; }
+        #headers.scrolled {
+            background-color: var(--bg-card) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        #headers.scrolled nav { padding-top: 1rem; padding-bottom: 1rem; }
+
+        .ourservicesContainer { animation: fade-i 1s ease-in-out; }
+        .thirdcontainer1, .thirecontainerGRID2, .thirecontainerGRID3,
+        .thirecontainerGRID4, .thirecontainerGRID5, .thirecontainerGRID6,
+        .thirecontainerGRID7, .thirecontainerGRID8 {
+            opacity: 0;
+            animation: fade-i 0.5s ease-in-out forwards;
+        }
+
+        .ForthcontainerGrid12 {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        [data-theme="dark"] .bg-white { background-color: var(--bg-card) !important; }
+        [data-theme="dark"] .bg-gray-100 { background-color: var(--bg-gray) !important; }
+        [data-theme="dark"] .bg-pink-50 { background-color: var(--bg-pink-light) !important; }
+        [data-theme="dark"] .bg-pink-100 { background-color: var(--bg-pink-light) !important; }
+        [data-theme="dark"] .text-gray-900,
+        [data-theme="dark"] .text-gray-800,
+        [data-theme="dark"] .text-gray-700,
+        [data-theme="dark"] .text-gray-600,
+        [data-theme="dark"] .text-gray-500 { color: var(--text-secondary) !important; }
+        [data-theme="dark"] .text-black { color: var(--text-primary) !important; }
+        [data-theme="dark"] .border-gray-100,
+        [data-theme="dark"] .border-gray-200 { border-color: var(--border-color) !important; }
+        [data-theme="dark"] .shadow-lg,
+        [data-theme="dark"] .shadow-sm,
+        [data-theme="dark"] .shadow-md { box-shadow: 0 10px 15px -3px var(--shadow-color) !important; }
+        [data-theme="dark"] .text-green-600 { color: var(--green-600) !important; }
+        [data-theme="dark"] .bg-green-500 { background-color: var(--tag-bg) !important; }
+        [data-theme="dark"] .bg-green-200 { background-color: var(--tag-bg) !important; }
+        [data-theme="dark"] .bg-pink-200 { background-color: #4a2d3a !important; }
+        [data-theme="dark"] .bg-pink-600 { background-color: var(--pink-primary) !important; }
+        [data-theme="dark"] .bg-pink-700 { background-color: var(--pink-hover) !important; }
+        [data-theme="dark"] .text-pink-600 { color: var(--pink-primary) !important; }
+        [data-theme="dark"] .hover\:text-pink-700:hover { color: var(--pink-hover) !important; }
+        [data-theme="dark"] .hover\:bg-pink-600:hover { background-color: var(--pink-primary) !important; }
+        [data-theme="dark"] .hover\:bg-pink-700:hover { background-color: var(--pink-hover) !important; }
+
+       
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            z-index: 1000;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-primary);
+            transition: all 0.3s ease;
+            border-radius: 3px;
+            display: block;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+       
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background-color: var(--bg-card);
+            box-shadow: -5px 0 30px var(--shadow-color);
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+            padding: 100px 30px 30px;
+            overflow-y: auto;
+            display: block; 
+        }
+        .mobile-menu.active { right: 0; }
+
+        .mobile-menu ul { list-style: none; padding: 0; margin: 0; }
+
+        .mobile-menu li {
+            margin-bottom: 8px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .mobile-menu.active li { opacity: 1; transform: translateX(0); }
+        .mobile-menu.active li:nth-child(1) { transition-delay: 0.08s; }
+        .mobile-menu.active li:nth-child(2) { transition-delay: 0.14s; }
+        .mobile-menu.active li:nth-child(3) { transition-delay: 0.20s; }
+        .mobile-menu.active li:nth-child(4) { transition-delay: 0.26s; }
+        .mobile-menu.active li:nth-child(5) { transition-delay: 0.32s; }
+        .mobile-menu.active li:nth-child(6) { transition-delay: 0.38s; }
+
+        .mobile-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 500;
+            display: block;
+            padding: 13px 16px;
+            border-radius: 12px;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+            border: 1px solid transparent;
+        }
+        .mobile-menu a:hover {
+            background-color: var(--pink-primary);
+            color: #fff;
+            border-color: var(--pink-primary);
+            transform: translateX(5px);
+        }
+        .mobile-menu .book-now-mobile {
+            background-color: var(--pink-primary);
+            color: #fff !important;
+            text-align: center;
+            margin-top: 12px;
+            border-color: var(--pink-primary) !important;
+        }
+        .mobile-menu .book-now-mobile:hover {
+            background-color: transparent !important;
+            color: var(--pink-primary) !important;
+            transform: none;
+        }
+
+       
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 998;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+        .overlay.active { opacity: 1; visibility: visible; }
+
+        .hidden { display: none; }
+        .light-mode .my-svg { display: block; }
+        .dark-mode .my-svg { display: none; }
+        @media screen and (max-width: 1199px) {
+            .leftcontainer h1 { font-size: 3rem; margin: 12px 3rem; }
+            .leftcontainer p { margin: 16px 3rem; }
+            .leftcontainer .buttons { margin: 1.5rem 3rem; }
+            .numbershows { margin-left: 2rem !important; }
+            .gridsectionsOFOurServices { padding: 2rem 3rem; gap: 1.5rem; }
+        }
+      @media screen and (max-width: 1280px) {
+    .w-full.overflow-hidden {
+        display: none !important;
+    }
+}
+        @media screen and (max-width: 1023px) {
+            .hamburger { display: flex !important; }
+            nav ul.md\:flex { display: none !important; }
+
+            .firstcontainer { flex-direction: column; padding-top: 5rem; }
+            .leftcontainer, .rightcontainer { width: 100% !important; }
+            .leftcontainer { padding: 2rem; }
+            .leftcontainer h1 { font-size: 2.6rem; margin: 10px 1.5rem; line-height: 1.25; word-spacing: 4px; width: 95%; }
+            .leftcontainer p { font-size: 1.1rem; margin: 14px 1.5rem; }
+            .leftcontainer .buttons { margin: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+            .numbershows { margin-left: 1.5rem !important; gap: 1rem; margin-top: 1.5rem; }
+            .number1 h5, .number2 h5, .number3 h5, .number4 h5 { font-size: 1.8rem !important; }
+            .rightcontainer { padding: 1.5rem 2rem 3rem; margin-top: 0; position: relative; }
+            .w-full.overflow-hidden { top: auto !important; position: relative !important; margin-top: -2rem; }
+            .gridsectionsOFOurServices { grid-template-columns: repeat(2, 1fr) !important; padding: 1.5rem 2rem; margin: 0 !important; gap: 1.5rem; }
+            .OurServices h1 { font-size: 2.5rem !important; }
+            .secondcontainer { flex-direction: column !important; height: auto !important; padding-bottom: 3rem; }
+            .imagesOfSecondContainerLeft { width: 100% !important; margin-left: 0 !important; padding: 2rem; position: relative !important; display: flex; justify-content: center; min-height: 320px; }
+            .imagesOfSecondContainerLeft img { position: relative !important; top: auto !important; width: 100% !important; max-width: 28rem; margin: 0 auto; }
+            .circile .absolute { position: relative !important; top: auto !important; bottom: auto !important; left: auto !important; display: inline-flex; margin: 1rem auto 0; width: 8rem !important; height: 8rem !important; font-size: 1.3rem !important; }
+            .secondcontainerStoryRight { width: 100% !important; padding: 0 2rem 2rem; margin-top: 0 !important; }
+            .thirdContainerGrid { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem; }
+            .forthcontainerGRID { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem; padding: 0 1rem; }
+            .fivthcontainer h2 { font-size: 2.5rem !important; text-align: center; }
+            .fivthcontainer p { width: 80% !important; text-align: center; }
+            .grid.grid-cols-2 { grid-template-columns: 1fr !important; gap: 2rem; }
+            .timeing .ul { grid-template-columns: repeat(2, 1fr) !important; gap: 1.5rem; }
+        }
+
+        @media screen and (max-width: 767px) {
+            nav .flex.items-center.gap-4 { gap: 0.5rem !important; }
+            nav .bg-pink-600 { padding: 0.4rem 0.9rem !important; font-size: 0.8rem !important; }
+            .firstcontainer { padding-top: 4.5rem; }
+            .leftcontainer h1 { font-size: 2.2rem; margin: 8px 1rem; line-height: 1.2; word-spacing: 2px; width: 100%; }
+            .leftcontainer p { font-size: 1rem; margin: 12px 1rem; }
+            .leftcontainer .buttons { margin: 1rem; flex-direction: column; gap: 0.75rem; }
+            .leftcontainer .buttons a { text-align: center; margin: 0 !important; }
+            .numbershows { grid-template-columns: repeat(2, 1fr) !important; margin-left: 1rem !important; margin-top: 1rem; gap: 1rem; }
+            .number1 h5, .number2 h5, .number3 h5, .number4 h5 { font-size: 1.6rem !important; }
+            .w-full.overflow-hidden { display: none !important; }
+            .OurServices h1 { font-size: 2rem !important; }
+            .gridsectionsOFOurServices { grid-template-columns: 1fr !important; padding: 1rem !important; margin: 0 !important; }
+            .headingsTop a { position: relative !important; top: auto !important; right: auto !important; display: inline-block; margin: 0.25rem 0.5rem; }
+            .headingsTop { display: flex; flex-direction: column; align-items: flex-start; }
+            .tag { display: none; }
+            .secondcontainerStoryRight h2 { font-size: 1.9rem !important; }
+            .secondcontainerGRID { grid-template-columns: 1fr !important; }
+            .secondcontainerGRID1 { margin: 0.5rem !important; }
+            .gallerhead h1 { font-size: 2rem !important; }
+            .thirdContainerGrid { grid-template-columns: 1fr !important; padding: 1rem !important; }
+            .commectsectionHeadings h1 { font-size: 2rem !important; }
+            .forthcontainerGRID { grid-template-columns: 1fr !important; padding: 0 0.75rem !important; }
+            .ForthcontainerGrid1 { margin: 0.5rem 0 !important; }
+            .fivthcontainer { padding: 2rem 1rem !important; }
+            .fivthcontainer h2 { font-size: 1.8rem !important; }
+            .fivthcontainer p { width: 100% !important; padding: 0 0.5rem; }
+            .fivthcontainer .flex.gap-5 { flex-direction: column; gap: 0.75rem; align-items: center; width: 100%; }
+            .fivthcontainer .flex.gap-5 button,
+            .fivthcontainer .flex.gap-5 a { width: 90%; justify-content: center; }
+            .timeing .ul { grid-template-columns: 1fr !important; gap: 1.5rem; margin-left: 0 !important; }
+            .hours { margin-left: 0 !important; }
+            footer .flex.flex-col.sm\:flex-row { flex-direction: column; text-align: center; gap: 1rem; }
+            footer .grid.grid-cols-2.sm\:grid-cols-3 { grid-template-columns: repeat(2, 1fr) !important; gap: 1.5rem; }
+            .absolute.right-10, .absolute.bottom-10.-left-10 { display: none; }
+
+            .mobile-menu { width: 82%; }
+        }
+
+      
+        @media screen and (max-width: 480px) {
+            .leftcontainer h1 { font-size: 1.85rem; margin: 8px 0.75rem; }
+            .leftcontainer p { margin: 10px 0.75rem; }
+            .leftcontainer .buttons { margin: 0.75rem; }
+            .leftcontainer .buttons a { font-size: 0.9rem; padding: 0.6rem 1.2rem; }
+            .numbershows { gap: 0.5rem; margin-left: 0.75rem !important; }
+            .number1 h5, .number2 h5, .number3 h5, .number4 h5 { font-size: 1.4rem !important; }
+            .leftcontainer .numbershows p { font-size: 0.85rem; }
+            .commectsectionHeadings h1 { font-size: 1.6rem !important; }
+            .fivthcontainer h2 { font-size: 1.6rem !important; }
+            .logoos { gap: 0.75rem; }
+            footer .grid.grid-cols-2.sm\:grid-cols-3 { grid-template-columns: 1fr !important; }
+            .secondcontainerStoryRight h2 { font-size: 1.6rem !important; }
+            .profileWithName { flex-wrap: wrap; }
+            .gridSection1, .gridSection2, .gridSection3,
+            .gridSection4, .gridSection5, .gridSection6 { margin: 0; }
+            .lis ul { margin-left: 0.75rem !important; }
+
+            .mobile-menu { width: 88%; padding: 90px 20px 30px; }
+            .mobile-menu a { font-size: 1.05rem; }
+        }
+
+       
+        @media screen and (max-width: 360px) {
+            .leftcontainer h1 { font-size: 1.6rem; }
+            nav .bg-pink-600 { padding: 0.35rem 0.7rem; font-size: 0.75rem; }
+            .number1 h5, .number2 h5, .number3 h5, .number4 h5 { font-size: 1.2rem !important; }
+            .mobile-menu { width: 92%; }
+        }
+
+       
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .firstcontainer { min-height: auto; }
+            .rightcontainer { display: none; }
+            .w-full.overflow-hidden { display: none; }
+            .mobile-menu { padding-top: 70px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+        }
+
+        img { max-width: 100%; height: auto; }
+    </style>
+</head>
+
+<body>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#Service">Services</a></li>
+            <li><a href="#About">About</a></li>
+            <li><a href="#Gallery">Gallery</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="contact.html#FAQsec">FAQ</a></li>
+            <li><a href="contact.html" class="book-now-mobile">Book Now</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <header id="headers" style="position: fixed; top: 0; width: 100%; z-index: 900; transition: all 0.3s ease-in-out;">
+        <nav class="flex items-center justify-between p-6 lg:px-12 cursor-pointer">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <div style="width: 3pc; height: 3pc; background-color: #d74483; border: 10px solid #d74483; border-radius: 100%;"
+                    class="flex items-center justify-center my-svg">
+                    <svg width="24" height="24" class="text-white" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                    </svg>
+                </div>
+                <div class="leading-tight">
+                    <div class="text-xl font-bold" style="color: var(--text-primary);">Paws & Play</div>
+                    <span class="text-[13px] font-medium" style="color: var(--text-secondary);">Premium Pet Care</span>
+                </div>
+            </a>
+
+            <ul class="hidden md:flex items-center gap-8 list-none">
+                <li><a href="#Service" class="text-sm font-medium transition-colors hover:text-pink-700" style="color: var(--text-secondary);">Services</a></li>
+                <li><a href="#About"   class="text-sm font-medium transition-colors hover:text-pink-700" style="color: var(--text-secondary);">About</a></li>
+                <li><a href="#Gallery" class="text-sm font-medium transition-colors hover:text-pink-700" style="color: var(--text-secondary);">Gallery</a></li>
+                <li><a href="team.html" class="text-sm font-medium transition-colors hover:text-pink-700" style="color: var(--text-secondary);">Team</a></li>
+                <li><a href="contact.html#FAQsec" class="text-sm font-medium transition-colors hover:text-pink-700" style="color: var(--text-secondary);">FAQ</a></li>
+            </ul>
+
+            <div class="flex items-center gap-3">
+                <button type="button" id="theme-toggle" class="transition-colors p-1" aria-label="Toggle dark mode" style="color: var(--text-secondary);">
+                    <svg id="sun-icon" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg id="moon-icon" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+
+                <a href="contact.html" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-sm transition-all whitespace-nowrap">
+                    Book Now
+                </a>
+
+                <button class="hamburger md:hidden" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="firstcontainer pt-20">
+            <div class="leftcontainer">
+                <h1 class="text-4xl font-bold mb-4">Where Every Pet Gets the Royal Treatment</h1>
+                <p class="text-lg text-gray-700 mb-6">Professional grooming, loving daycare, and comfortable boarding for your furry family members. Because they deserve the best.</p>
+                <div class="buttons">
+                    <a href="contact.html" class="outline outline-2 outline-pink-600 outline-offset-2 bg-pink-600 border-3 border-solid border-white hover:bg-pink-700 text-white p-3 m-3 rounded-full font-medium">Book an Appointment</a>
+                    <a href="#Service" class="bg-white-600 hover:bg-pink-600 border-2 border-solid border-pink-600 hover:text-white text-pink-600 px-4 py-2 font-medium rounded-full">View Services</a>
+                </div>
+                <div class="numbershows grid grid-cols-4 gap-1 mt-5 ml-10">
+                    <div class="number1"><h5 class="text-pink-600 text-[35px] font-bold">10K+</h5><p>Happy Pets</p></div>
+                    <div class="number2"><h5 class="text-pink-600 text-[35px] font-bold">8+</h5><p>Years Experience</p></div>
+                    <div class="number3"><h5 class="text-pink-600 text-[35px] font-bold">4.9</h5><p>Average Rating</p></div>
+                    <div class="number4"><h5 class="text-pink-600 text-[35px] font-bold">50+</h5><p>Services</p></div>
+                </div>
+            </div>
+            <div class="rightcontainer w-1/2 p-10 mt-10 relative">
+                <div class="absolute right-10 -top-10 h-32 w-[10%] rounded-full bg-pink-400 opacity-50 blur-2xl"></div>
+                <img class="rounded-[20px] shadow-lg" src="assests/photo-1587300003388-59208cc962cb.jpg" alt="">
+                <div class="absolute bottom-10 -left-10 h-24 w-[10%] rounded-2xl bg-purple-600 opacity-50 blur-2xl"></div>
+            </div>
+        </div>
+
+        <div class="w-full overflow-hidden" style="position: absolute; top: 30pc;">
+            <div class="lg:mt-24">
+                <svg class="w-full" viewBox="0 0 1440 100" fill="none" preserveAspectRatio="none">
+                    <path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V100H0V50Z" style="fill: var(--bg-primary); transition: fill 0.3s ease;"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Our Services -->
+        <div class="ourservicesContainer bg-white mt-20">
+            <div class="OurServices text-center py-10">
+                <h1 class="font-bold text-[45px]" id="Service">Our Services</h1>
+                <p class="text-gray-500 font-medium text-[17px]">Everything your pet needs for a happy, healthy life</p>
+            </div>
+
+            <div class="gridsectionsOFOurServices grid grid-cols-3 gap-4 p-[100px] pt-0 mt-0 ml-15 mr-15">
+                <div class="gridSection1 card-hover rounded-[20px] shadow-lg bg-gray-100 overflow-hidden pb-10">
+                    <div class="img1Ofgridsection relative">
+                        <img class="block w-full rounded card-images-hover" src="assests/photo-1516734212186-a967f81ad0d7.jpg" alt="">
+                        <div class="tag absolute top-4 right-3 bg-green-500 text-white pl-3 pr-3 pb-1 font-bold text-[15px] rounded-full">popular</div>
+                    </div>
+                    <div class="headingsTop relative">
+                        <h2 class="m-2 p-2 text-[20px] font-bold">Full Grooming</h2>
+                        <a class="absolute top-2 right-8 bg-pink-200 text-bold text-[15px] pl-2 pr-2 pt-1 pb-1 text-pink-700 rounded-full text-md font-bold">From $65</a>
+                    </div>
+                    <div class="p text-gray-600 text-[20px] ml-5"><p>Complete grooming package including bath, haircut, nail trim, ear cleaning, and teeth brushing.</p></div>
+                    <div class="lis"><ul class="relative gap-2 ml-5 mt-5">
+                        <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Bath & blow dry</li>
+                        <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Breed-specific haircut</li>
+                        <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Nail trim</li>
+                    </ul></div>
+                    <div class="duration text-gray-600 text-[15px] ml-5 font-bold mt-5"><p>Duration: 2-3 hours</p></div>
+                </div>
+
+                <div class="gridSection2">
+                    <div class="gridSection1 rounded-[20px] shadow-lg bg-gray-100 overflow-hidden pb-10 card-hover">
+                        <div class="img1Ofgridsection relative"><img class="block w-full rounded card-images-hover" src="assests/pp2.jpg" alt=""></div>
+                        <div class="headingsTop relative">
+                            <h2 class="m-2 p-2 text-[20px] font-bold">Bath & Brush</h2>
+                            <a class="absolute top-2 right-8 bg-pink-200 text-bold text-[15px] pl-2 pr-2 pt-1 pb-1 text-pink-700 rounded-full text-md font-bold">From $35</a>
+                        </div>
+                        <div class="p text-gray-600 text-[20px] ml-5"><p>Refreshing bath with premium shampoo, blow dry, and thorough brushing to keep coat healthy.</p></div>
+                        <div class="lis"><ul class="relative gap-2 ml-5 mt-5">
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Premium shampoo</li>
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Conditioning treatment</li>
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Blow dry</li>
+                        </ul></div>
+                        <div class="duration text-gray-600 text-[15px] ml-5 font-bold mt-5"><p>Duration: 1 hour</p></div>
+                    </div>
+                </div>
+
+                <div class="gridSection3">
+                    <div class="gridSection1 rounded-[20px] shadow-lg bg-gray-100 overflow-hidden pb-10 card-hover">
+                        <div class="img1Ofgridsection relative">
+                            <img class="block w-full rounded card-images-hover" src="assests/11111111.jpg" alt="">
+                            <div class="tag absolute top-4 right-3 bg-green-500 text-white pl-3 pr-3 pb-1 font-bold text-[15px] rounded-full">popular</div>
+                        </div>
+                        <div class="headingsTop relative">
+                            <h2 class="m-2 p-2 text-[20px] font-bold">Daycare</h2>
+                            <a class="absolute top-2 right-8 bg-pink-200 text-bold text-[15px] pl-2 pr-2 pt-1 pb-1 text-pink-700 rounded-full text-md font-bold">$35/day</a>
+                        </div>
+                        <div class="p text-gray-600 text-[20px] ml-5"><p>Safe, supervised playtime with other dogs in our climate-controlled facility with indoor/outdoor areas.</p></div>
+                        <div class="lis pb-10"><ul class="relative gap-2 ml-5 mt-5">
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Supervised play groups</li>
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Indoor/outdoor areas</li>
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Naptime rest periods</li>
+                        </ul></div>
+                    </div>
+                </div>
+
+                <div class="gridSection4">
+                    <div class="gridSection1 rounded-[20px] shadow-lg bg-gray-100 overflow-hidden pb-10 card-hover">
+                        <div class="img1Ofgridsection relative"><img class="block w-full rounded card-images-hover" src="assests/pp3.jpg" alt=""></div>
+                        <div class="headingsTop relative">
+                            <h2 class="m-2 p-2 text-[20px] font-bold">Overnight Boarding</h2>
+                            <a class="absolute top-2 right-8 bg-pink-200 text-bold text-[15px] pl-2 pr-2 pt-1 pb-1 text-pink-700 rounded-full text-md font-bold">$55/night</a>
+                        </div>
+                        <div class="p text-gray-600 text-[20px] ml-5"><p>Comfortable overnight stays with cozy bedding, multiple play sessions, and lots of love.</p></div>
+                        <div class="lis pb-10"><ul class="relative gap-2 ml-5 mt-5">
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Private suites available</li>
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Evening cuddle time</li>
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>3+ play sessions daily</li>
+                        </ul></div>
+                    </div>
+                </div>
+
+                <div class="gridSection5">
+                    <div class="gridSection1 rounded-[20px] shadow-lg bg-gray-100 overflow-hidden pb-10 card-hover">
+                        <div class="img1Ofgridsection relative"><img class="block w-full rounded card-images-hover" src="assests/pp4.jpg" alt=""></div>
+                        <div class="headingsTop relative">
+                            <h2 class="m-2 p-2 text-[20px] font-bold">Nail Trim</h2>
+                            <a class="absolute top-2 right-8 bg-pink-200 text-bold text-[15px] pl-2 pr-2 pt-1 pb-1 text-pink-700 rounded-full text-md font-bold">$15</a>
+                        </div>
+                        <div class="p text-gray-600 text-[20px] ml-5"><p>Quick and stress-free nail trimming by experienced groomers using gentle handling techniques.</p></div>
+                        <div class="lis"><ul class="relative gap-2 ml-5 mt-5">
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Gentle handling</li>
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Dremel smoothing</li>
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Paw pad check</li>
+                        </ul></div>
+                        <div class="duration text-gray-600 text-[15px] ml-5 font-bold mt-5"><p>Duration: 15-min</p></div>
+                    </div>
+                </div>
+
+                <div class="gridSection6">
+                    <div class="gridSection1 rounded-[20px] shadow-lg bg-gray-100 overflow-hidden pb-10 card-hover">
+                        <div class="img1Ofgridsection relative"><img class="block w-full rounded card-images-hover" src="assests/photo-1587300003388-59208cc962cb.jpg" alt=""></div>
+                        <div class="headingsTop relative">
+                            <h2 class="m-2 p-2 text-[20px] font-bold">Puppy Package</h2>
+                            <a class="absolute top-2 right-8 bg-pink-200 text-bold text-[15px] pl-2 pr-2 pt-1 pb-1 text-pink-700 rounded-full text-md font-bold">From $45</a>
+                        </div>
+                        <div class="p text-gray-600 text-[20px] ml-5"><p>Special first grooming experience designed to make puppies comfortable with the grooming process.</p></div>
+                        <div class="lis"><ul class="relative gap-2 ml-5 mt-5">
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Gentle introduction</li>
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Mini bath</li>
+                            <li class="flex items-center gap-3"><svg style="color: green;" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Face trim</li>
+                        </ul></div>
+                        <div class="duration text-gray-600 text-[15px] ml-5 font-bold mt-5"><p>Duration: 1-hour</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center mb-10">
+                <button class="bg-white outline outline-pink-700 text-pink-700 hover:text-white hover:bg-pink-700 rounded-full px-6 py-2">View <a href="ourservices.html">all Services</a></button>
+            </div>
+
+            <!-- About / Our Story -->
+            <div class="secondcontainer flex w-full relative mb-10 pt-12 pb-[5pc] bg-pink-50">
+                <div class="imagesOfSecondContainerLeft w-1/2 pl-10 ml-10 mb-0 w-[45%]">
+                    <img class="rounded-[25px] absolute top-[10pc] w-[30pc]" src="/assests/photo-1450778869180-41d0601e046e.jpg" alt="">
+                    <div class="circile">
+                        <div class="absolute top-[25pc] bottom-0 overflow-hidden left-[28pc] z-40 bg-pink-600 text-white items-center justify-center flex font-medium text-[30px]"
+                            style="width: 10pc; height:10pc; border: 6px solid rgb(219, 39, 119); border-radius: 50%;">8+ Years</div>
+                    </div>
+                </div>
+                <div class="secondcontainerStoryRight w-[45%] mt-10">
+                    <h5 class="text-pink-600 text-lg font-medium" id="About">Our Story</h5>
+                    <h2 class="text-[40px] font-bold">A Place Where Pets Come First</h2>
+                    <p class="text-gray-600 text-md m-2">Paws & Play was founded in 2015 by Sarah Mitchell, a certified master groomer with a vision to create a stress-free environment where pets could receive top-quality care.</p>
+                    <p class="text-gray-600 text-md m-2">What started as a small grooming salon has grown into Austin's premier pet care facility, offering grooming, daycare, and boarding services for dogs and cats of all sizes.</p>
+                    <p class="text-gray-600 text-md m-2">Our team of certified professionals treats every pet like their own, using gentle handling techniques and positive reinforcement to ensure a happy experience.</p>
+                    <div class="secondcontainerGRID grid grid-cols-2 gap-4 mt-3">
+                        <div class="secondcontainerGRID1 flex relative gap-4 shadow-lg rounded-lg p-4 bg-white border-white m-2">
+                            <div class="ticks"><div style="background-color: #cef0ce;" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" style="color: green;"/></svg></div></div>
+                            <div><h2 class="text-lg font-bold">Certified Staff</h2><p class="text-sm font-medium text-gray-500">All groomers are nationally certified with ongoing education requirements.</p></div>
+                        </div>
+                        <div class="secondcontainerGRID2">
+                            <div class="secondcontainerGRID1 flex relative gap-4 shadow-lg rounded-lg p-4 bg-white border-white m-2">
+                                <div class="ticks"><div style="background-color: #cef0ce;" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" style="color: green;"/></svg></div></div>
+                                <div><h2 class="text-lg font-bold">Fear-Free Certified</h2><p class="text-sm font-medium text-gray-500">We use fear-free handling techniques to minimize stress and anxiety.</p></div>
+                            </div>
+                        </div>
+                        <div class="secondcontainerGRID3">
+                            <div class="secondcontainerGRID1 flex relative gap-4 shadow-lg rounded-lg p-4 bg-white border-white m-2">
+                                <div class="ticks"><div style="background-color: #cef0ce;" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" style="color: green;"/></svg></div></div>
+                                <div><h2 class="text-lg font-bold">Premium Products</h2><p class="text-sm font-medium text-gray-500">Only the highest quality, pet-safe shampoos and grooming products.</p></div>
+                            </div>
+                        </div>
+                        <div class="secondcontainerGRID4">
+                            <div class="secondcontainerGRID1 flex relative gap-4 shadow-lg rounded-lg p-4 bg-white border-white m-2">
+                                <div class="ticks"><div style="background-color: #cef0ce;" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" style="color: green;"/></svg></div></div>
+                                <div><h2 class="text-lg font-bold">Climate Controlled</h2><p class="text-sm font-medium text-gray-500">Temperature-controlled facility for year-round comfort.</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="thirdcontainer ourservicesContainer2 py-16">
+                <div class="gallerhead flex items-center justify-center flex-col gap-3 px-4">
+                    <h1 class="font-bold font-playfair text-4xl md:text-[40px] text-center" id="Gallery">Happy Pets Gallery</h1>
+                    <p class="text-gray-500 font-medium text-center">See our furry friends looking their best</p>
+                </div>
+                <div class="fixingGrid1 flex justify-center">
+                    <div class="thirdContainerGrid grid grid-cols-4 grid-rows-2 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto p-6 md:p-10 gap-6">
+                        <div class="thirdcontainer1" style="animation-delay: 0.1s;"><div class="thirdcontainers group relative flex flex-col items-center shadow-md"><img class="rounded-[20px] aspect-[4/5]" src="assests/photo-1587300003388-59208cc962cbcccccccccc.jpg" alt="Grooming"><a class="absolute bottom-6 left-6 py-2 px-6 text-sm font-semibold opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 bg-white text-black rounded-full shadow-xl">Grooming</a></div></div>
+                        <div class="thirecontainerGRID2" style="animation-delay: 0.2s;"><div class="thirdcontainer1"><div class="thirdcontainers group relative flex flex-col items-center shadow-md"><img class="rounded-[20px] aspect-[4/5]" src="/assests/1.jpg" alt="Grooming"><a class="absolute bottom-6 left-6 py-2 px-6 text-sm font-semibold opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 bg-white text-black rounded-full shadow-xl">Daycare</a></div></div></div>
+                        <div class="thirecontainerGRID3" style="animation-delay: 0.3s;"><div class="thirdcontainer1"><div class="thirdcontainers group relative flex flex-col items-center shadow-md"><img class="rounded-[20px] aspect-[4/5]" src="assests/2.jpg" alt="Grooming"><a class="absolute bottom-6 left-6 py-2 px-6 text-sm font-semibold opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 bg-white text-black rounded-full shadow-xl">Grooming</a></div></div></div>
+                        <div class="thirecontainerGRID4" style="animation-delay: 0.4s;"><div class="thirdcontainer1"><div class="thirdcontainers group relative flex flex-col items-center shadow-md"><img class="rounded-[20px] aspect-[4/5]" src="assests/3.jpg" alt="Grooming"><a class="absolute bottom-6 left-6 py-2 px-6 text-sm font-semibold opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 bg-white text-black rounded-full shadow-xl">Grooming</a></div></div></div>
+                        <div class="thirecontainerGRID5" style="animation-delay: 0.5s;"><div class="thirdcontainer1"><div class="thirdcontainers group relative flex flex-col items-center shadow-md"><img class="rounded-[20px] aspect-[4/5]" src="assests/4.jpg" alt="Grooming"><a class="absolute bottom-6 left-6 py-2 px-6 text-sm font-semibold opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 bg-white text-black rounded-full shadow-xl">Daycare</a></div></div></div>
+                        <div class="thirecontainerGRID6" style="animation-delay: 0.6s;"><div class="thirdcontainer1"><div class="thirdcontainers group relative flex flex-col items-center shadow-md"><img class="rounded-[20px] aspect-[4/5]" src="assests/5.jpg" alt="Grooming"><a class="absolute bottom-6 left-6 py-2 px-6 text-sm font-semibold opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 bg-white text-black rounded-full shadow-xl">Grooming</a></div></div></div>
+                        <div class="thirecontainerGRID7" style="animation-delay: 0.7s;"><div class="thirdcontainer1"><div class="thirdcontainers group relative flex flex-col items-center shadow-md"><img class="rounded-[20px] aspect-[4/5]" src="assests/6.jpg" alt="Grooming"><a class="absolute bottom-6 left-6 py-2 px-6 text-sm font-semibold opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 bg-white text-black rounded-full shadow-xl">Grooming</a></div></div></div>
+                        <div class="thirecontainerGRID8" style="animation-delay: 0.8s;"><div class="thirdcontainer1"><div class="thirdcontainers group relative flex flex-col items-center shadow-md"><img class="rounded-[20px] aspect-[4/5]" src="assests/7.jpg" alt="Grooming"><a class="absolute bottom-6 left-6 py-2 px-6 text-sm font-semibold opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 bg-white text-black rounded-full shadow-xl">Boarding</a></div></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="followInstagram flex items-center justify-center flex-col gap-2 mb-10">
+                <p class="text-lg font-playfair font-medium tex-grap-800">Follow us on Instagram to see more happy pets!</p>
+                <a href="https://www.instagram.com/pawsandplay" class="flex items-center font-medium text-pink-600 hover:text-pink-800 hover:font-bold"><img width="40px" src="assests/instagram.svg" alt="instagram"> @pawsandplay</a>
+            </div>
+
+            <div class="Forthcontainer bg-pink-600 py-20 w-full">
+                <div class="forthcontainerfix m-5 px-2 pl-10 pr-10 items-center justify-center">
+                    <div class="commectsectionHeadings flex flex-col items-center justify-center gap-2 m-5 p-5">
+                        <h1 class="text-white text-[50px] font-playfair font-bold">What Pet Parents Say</h1>
+                        <p class="text-gray-300 text-md font-medium">Don't just take our word for it - hear from our happy customers</p>
+                    </div>
+                    <div class="forthcontainerGRID grid grid-cols-4 w-full items-center" style="column-gap: 10px;">
+                        <div class="ForthcontainerGrid1 rounded-[20px] shadow-lg bg-white flex flex-col px-5 relative gap-4 py-5 mt-5 mb-5 card-hover">
+                            <div class="stars flex absolute top-4 left-10"><div class="flex gap-1" style="color: green;">
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div></div>
+                            <div class="ReadComment text-gray-600 text-md m-3 p-2"><p>"My anxious rescue dog Max used to hate grooming, but the team at Paws & Play has completely changed his experience. He actually wags his tail when we pull up now!"</p></div>
+                            <div class="profileWithName w-full flex items-center gap-3 mt-5"><div class="profile rounded-full overflow-hidden"><img width="50px" src="assests/p1.jpg" alt=""></div><div class="name"><p class="font-bold text-[20px]">Jessica Thompson</p><p class="text-gray-500">Max, Golden Retriever</p></div></div>
+                        </div>
+                        <div class="ForthcontainerGrid2"><div class="ForthcontainerGrid1 rounded-[20px] shadow-lg bg-white flex flex-col px-5 relative gap-4 py-5 mt-5 mb-5 card-hover">
+                            <div class="stars flex absolute top-4 left-10"><div class="flex gap-1" style="color: green;"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div></div>
+                            <div class="ReadComment text-gray-600 text-md m-3 p-2"><p>"The daycare is amazing! My pup comes home happy and tired. The daily report cards and photos are such a nice touch. Best investment for my work-from-home sanity."</p></div>
+                            <div class="profileWithName w-full flex items-center gap-3 mt-5"><div class="profile rounded-full overflow-hidden"><img width="50px" src="assests/p2.jpg" alt=""></div><div class="name"><p class="font-bold text-[20px]">Michael Park</p><p class="text-gray-500">Luna, Labradoodle</p></div></div>
+                        </div></div>
+                        <div class="ForthcontainerGrid3"><div class="ForthcontainerGrid1 rounded-[20px] shadow-lg bg-white flex flex-col px-5 relative gap-4 py-5 mt-5 mb-5 card-hover">
+                            <div class="stars flex absolute top-4 left-10"><div class="flex gap-1" style="color: green;"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div></div>
+                            <div class="ReadComment text-gray-600 text-md m-3 p-2"><p>"We board our two cats here whenever we travel, and they always seem relaxed when we pick them up. The staff truly cares about all animals, not just dogs."</p></div>
+                            <div class="profileWithName w-full flex items-center gap-3 mt-5"><div class="profile rounded-full overflow-hidden"><img width="50px" src="assests/p3.jpg" alt=""></div><div class="name"><p class="font-bold text-[20px]">Amanda Chen</p><p class="text-gray-500">Whiskers & Shadow, Cats</p></div></div>
+                        </div></div>
+                        <div class="ForthcontainerGrid4"><div class="ForthcontainerGrid1 rounded-[20px] shadow-lg bg-white flex flex-col px-5 relative gap-4 py-5 mt-5 mb-5 card-hover">
+                            <div class="stars flex absolute top-4 left-10"><div class="flex gap-1" style="color: green;"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div></div>
+                            <div class="ReadComment text-gray-600 text-md m-3 p-2"><p>"Sarah is a miracle worker! She transformed my matted Maltese into a show-worthy pup. The attention to detail and patience is unmatched anywhere in Austin."</p></div>
+                            <div class="profileWithName w-full flex items-center gap-3 mt-5"><div class="profile rounded-full overflow-hidden"><img width="50px" src="assests/p4.jpg" alt=""></div><div class="name"><p class="font-bold text-[20px]">David Martinez</p><p class="text-gray-500">Princess, Maltese</p></div></div>
+                        </div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fivthcontainer bg-pink-700 w-full p-10">
+            <div class="logoos flex items-center justify-center gap-5 m-5 p-5">
+                <div style="width: 3pc; height: 3pc; background-color: #d74483; border: 10px solid #d74483; border-radius: 100%;" class="flex items-center justify-center">
+                    <svg width="24" height="24" class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                </div>
+                <div style="width: 3pc; height: 3pc; background-color: #d74483; border: 10px solid #d74483; border-radius: 100%;" class="flex items-center justify-center">
+                    <svg width="24" height="24" class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                </div>
+                <div style="width: 3pc; height: 3pc; background-color: #d74483; border: 10px solid #d74483; border-radius: 100%;" class="flex items-center justify-center">
+                    <svg width="24" height="24" class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                </div>
+            </div>
+            <div class="things flex items-center justify-center gap-5 flex-col">
+                <h2 class="text-[50px] font-bold font-playfair text-white">Ready to Pamper Your Pet?</h2>
+                <p class="text-gray-300 h-auto w-1/2 text-center">Book an appointment today and give your furry friend the love and care they deserve. First-time customers get 15% off their first grooming service!</p>
+                <div class="flex gap-5">
+                    <button class="flex bg-white text-[15px] text-pink-600 font-bold gap-2 p-4 rounded-full hover:shadow-2xl">
+                        <svg width="20px" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <a href="contact.html">Book Appointment</a>
+                    </button>
+                    <a href="tel:+15557287529" class="flex bg-pink-700 text-white outline outline-1 outline-gray-200 font-bold gap-2 px-6 py-4 hover:bg-pink-600 hover:outline-pink-600 rounded-full hover:shadow-2xl w-fit">
+                        <svg width="20px" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        (555) 728-7529
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white">
+        <div class="w-full mx-auto px-6 py-12">
+            <div class="grid grid-cols-2 gap-10">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-[#d74483] border-[6px] border-[#d74483]">
+                            <svg class="h-6 w-6 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        </div>
+                        <h2 class="text-xl font-bold">Paws & Play</h2>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-md">Premium pet grooming, daycare, and boarding services in Austin, TX. Loving care for your furry family members since 2015.</p>
+                    <div class="mt-6 flex gap-4">
+                        <a href="https://facebook.com/pawsandplay" class="rounded-full hover:bg-pink-600 bg-gray-800 p-2 transition-colors" aria-label="Facebook"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                        <a href="https://instagram.com/pawsandplay" class="rounded-full hover:bg-pink-600 bg-gray-800 p-2 transition-colors" aria-label="Instagram"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                        <a href="https://tiktok.com/@pawsandplay" class="rounded-full hover:bg-pink-600 bg-gray-800 p-2 transition-colors" aria-label="TikTok"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="font-bold mb-3">Services</h3>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a class="hover:text-white" href="ourservices.html#grooming">Grooming</a></li>
+                            <li><a class="hover:text-white" href="ourservices.html">Daycare</a></li>
+                            <li><a class="hover:text-white" href="ourservices.html">Boarding</a></li>
+                            <li><a class="hover:text-white" href="ourservices.html">Pricing</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold mb-3">Company</h3>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a class="hover:text-white" href="#About">About Us</a></li>
+                            <li><a class="hover:text-white" href="team.html">Our Team</a></li>
+                            <li><a class="hover:text-white" href="#Gallery">Gallery</a></li>
+                            <li><a class="hover:text-white" href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold mb-3">Support</h3>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a class="hover:text-white" href="contact.html#FAQsec">FAQs</a></li>
+                            <li><a class="hover:text-white" href="contact.html#newClientinfo">New Client Info</a></li>
+                            <li><a class="hover:text-white" href="contact.html#FAQsec">Vaccination Policy</a></li>
+                            <li><a class="hover:text-white" href="contact.html#FAQsec">Cancellation Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-8 border-gray-700">
+            <div class="timeing">
+                <div class="ul grid grid-cols-3 gap-4 text-gray-400">
+                    <div class="hours list-none gap-1 flex flex-col ml-5"><h3 class="font-bold">Hours</h3><li>Mon-Fri: 7:00AM - 7:00PM</li><li>Saturday: 8:00AM - 6:00PM</li><li>Sunday: 9:00 AM - 5:00 PM</li></div>
+                    <div class="hours list-none gap-1 flex flex-col ml-5"><h3 class="font-bold">Contact</h3><li>hello@pawsandplay.com</li><li>(555) 728-7529</li></div>
+                    <div class="hours list-none gap-1 flex flex-col ml-5"><h3 class="font-bold">Location</h3><li>456 Pet Paradise Lane</li><li>Austin, TX 78701</li></div>
+                </div>
+            </div>
+            <hr class="my-8 border-gray-700">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-gray-400 text-sm">
+                <p>© 2026 Paws & Play. All rights reserved.</p>
+                <div class="flex gap-5"><a class="hover:text-white" href="#">Privacy Policy</a><a class="hover:text-white" href="#">Terms of Service</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const header      = document.getElementById('headers');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu  = document.getElementById('mobileMenu');
+        const overlay     = document.getElementById('overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-menu a');
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon     = document.getElementById('sun-icon');
+        const moonIcon    = document.getElementById('moon-icon');
+
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        function openMenu() {
+            hamburgerBtn.classList.add('active');
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            hamburgerBtn.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeMenu() {
+            hamburgerBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        hamburgerBtn.addEventListener('click', () => {
+            mobileMenu.classList.contains('active') ? closeMenu() : openMenu();
+        });
+
+        overlay.addEventListener('click', closeMenu);
+
+        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+        const savedTheme = localStorage.getItem('theme');
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        }
+
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            applyTheme('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            applyTheme('light');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            localStorage.setItem('theme', next);
+        });
+
+        function updateSVGVisibility() {
+            const svgContainer = document.querySelector('.my-svg');
+            if (svgContainer) {
+                svgContainer.style.display =
+                    document.documentElement.getAttribute('data-theme') === 'dark' ? 'none' : 'flex';
+            }
+        }
+        updateSVGVisibility();
+        new MutationObserver(updateSVGVisibility)
+            .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+
+/* --- Pet Gallery Card Styles --- */
+
+.thirdcontainers {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    /* isolation: isolate ensures the blur/z-index stays inside the card */
+    isolation: isolate; 
+    cursor: pointer;
+}
+
+/* The Black Tint + Blur Overlay */
+.thirdcontainers::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* Dark gradient to make the white pill pop */
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.3) 20%,
+        rgba(0, 0, 0, 0) 30%
+    );
+    /* The Blur Effect */
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    
+    /* Hidden by default, fades in on hover */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Show the "black ting" on hover */
+.thirdcontainers:hover::before {
+    opacity: 1;
+}
+
+/* Smooth Image Zoom */
+.thirdcontainers img {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thirdcontainers:hover img {
+    transform: scale(1.08);
+}
+
+/* Ensure the pill link stays above the dark overlay */
+.thirdcontainers a {
+    z-index: 2;
+}
+
